@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weather
+  labels:
+    app.kubernetes.io/name: weather-api
+    app.kubernetes.io/instance: weather-1
+    app.kubernetes.io/version: "1.0"
+    app.kubernetes.io/component: ui
+    app.kubernetes.io/part-of: weather
+    app.kubernetes.io/managed-by: kubectl
+    app.kubernetes.io/created-by: lazerduck
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: weather
+  template:
+    metadata:
+      labels:
+        app: weather
+    spec:
+      containers:
+      - name: weather
+        image: localhost:32000/weatherparser:arm64
+        imagePullPolicy: Always
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
+        ports:
+        - containerPort: 8080
+      restartPolicy: Always
