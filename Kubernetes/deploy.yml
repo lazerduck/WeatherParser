@@ -24,6 +24,9 @@ spec:
       - name: weather
         image: localhost:32000/weatherparser:arm64
         imagePullPolicy: Always
+        env:
+        - name: TZ
+          value: "Europe/London"
         resources:
           limits:
             memory: "128Mi"
